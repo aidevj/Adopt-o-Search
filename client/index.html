@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta name="viewport" content="initial-scale=1.0">
+    <meta charset="utf-8">
+    
+    <!-- Stylesheet -->
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+    
+    <!-- JQuery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    
+    <!-- Map Scripts -->
+    <script src="js/map.js"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCJ3HeAtJ0m1l1jR3JVrvLQEZOEpB98Vjs&libraries=places&callback=initMap" async defer></script>
+    
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Dosis" rel="stylesheet">
+  
+    <title>Isis | Project 3</title>
+    
+    <script>
+      "use strict";
+      
+      $(document).ready(function(e) {
+        
+        // show-more-link Handler    //////////////////////////////////////////////////
+        $(".show-more-link a").on("click", function() {
+            var $this = $(this); 
+            var $content = $this.parent().prev("div.content");
+            var linkText = $this.text().toUpperCase();    
+
+            if (linkText === "OPEN DESCRIPTION") {
+                linkText = "Close description";
+                $content.removeClass("hideContent").addClass("showContent");
+            } else {
+                linkText = "Open description";
+                $content.removeClass("showContent").addClass("hideContent");
+            };
+            $this.text(linkText);
+        });
+            
+        // Form Submit Button Handler
+        $("#animalForm").submit(function(e) {
+          var action = $("#animalForm").attr("action");
+                
+          // Searching Wait text
+          document.querySelector("#result").innerHTML = "<b>Searching for </b>" + $("#animalName").val() + "s...";
+          
+          var animal = encodeURIComponent($("#animalName").val()); 
+          var location = encodeURIComponent($("#location").val());
+          
+          var data = "animal=" + animal + "&location=" + location;
+          
+          $("result").fadeOut(1000);
+          $.ajax({
+            cache: false,
+            type: "get",
+            url: action,
+            data: data,
+            dataType: "json",          
+            success: jsonLoaded,
+            
+            //-- error --//
+            error: function (error, status, xhr) {
+              var resultText = JSON.stringify(error);
+              console.log(resultText);
+              $("#result").text("Something went wrong, please refresh :'(");
+            }            
+          });
+          
+          e.preventDefault();
+          return false;         
+          
+        });
+                
+      });
+      
+      function jsonLoaded(obj){
+        if (obj.total_items == 0) {
+          var status = "Sorry! No results found.<br>Check you have written everything correctly or try a different search."
+          document.querySelector("#result").innerHTML = "<p>" + status + "</p>";
+          $("#result").fadeIn(500);
+          return;
+        }
+        
+        var allPets = obj;  //obj is the array
+        var bigString = "";
+        var count = 0;
+        //console.log(obj);
+        
+        for (var i=0; i<allPets.length; i++) {
+          var pet = allPets[i];
+                    
+          var animalValue = document.getElementById("animalName");
+          var selectedAnimal = animalValue.options[animalValue.selectedIndex].value;
+          if (pet.animal != selectedAnimal) continue;
+          
+          var name = pet.name;
+          if (!name) name = "No name found";
+          
+          var age = pet.age;
+
+          var sex = pet.sex;
+          
+          var breeds = pet.breeds;
+          if (!breeds) breeds = "No breed found";
+          
+          var img = pet.media.photos[1].fpm;
+          if (!img) {
+            img = "media/placeholder.png";
+          } 
+          
+          var description = pet.description;
+          if (!description) description = "No description available";
+          
+          var contact = {
+            email: pet.contact.email,
+            address: pet.contact.address1,
+            city: pet.contact.city,
+            state: pet.contact.state,
+            zip: pet.contact.zip
+          };
+          
+          
+          var options = pet.options;
+          if (!options) options = "n/a";
+          
+          //-- Append HTML --//     
+          var line = "<article>";     // start of this pet article
+          
+          line += "<img class='petImg' height='63' width='95' src='" + img + "'/>";
+          line += "<b>" + name + "</b>";
+          if (age) line += " (" + age + " " + sex + ")";
+          line += "<br>Breed(s): " + breeds + "";
+          //line += "<section class='contact'>[Contact Info]</section>";
+          line += "<div class='content hideContent'>" + description + "</div>";
+          line += "<div class='show-more-link'><a href='#'>Open Description</a></div>";
+          
+          line += "</article>";     // end of this pet article
+          
+          bigString += line;
+          count++;
+        }
+        if (count == 0) {
+          bigString = "Sorry! No results found.<br>Check you have written everything correctly or try a different search.";
+        }
+        
+        document.querySelector("#result").innerHTML = bigString;
+        $("#result").fadeIn(500);
+              
+      }
+    </script>
+  </head>
+  
+  <body>
+    <!-- Control Panel (sidebar) -->
+    <div id="controlPanel">
+      <button type="button" class="closePanel">X</button>
+      <img id="panelbg" src="media/dog.svg" height="300" width="300" alt="dog silhouette">
+      
+      <section id="controlPanelContent">
+        <h1>ADOPT-O-SEARCH</h1>
+                                                             
+        <!-- Search Form -->
+        <form id="animalForm" action="/animalSearch" method="get">
+          <select id="animalName" name="animalName">
+            <option disabled selected value>--Pet--</option>
+            <option value="Dog">Dog</option>
+            <option value="Cat">Cat</option>
+            <option value="Barnyard">Barnyard</option>
+            <option value="Horse">Horse</option>
+            <option value="Pig">Pig</option>
+            <option value="Reptile">Reptile</option>
+            <option value="Small & Furry">Small Furry</option>
+          </select>
+          <input id="location" type="text" name="location" value="14623" size="6" placeholder="Zip code">
+          <input id="submitbutton" type="submit" value="Search">
+        </form>
+      </section>
+    
+      <!-- Results out div -->
+      <div id="result">
+        <p>Search for a pet somewhere!</p> 
+        
+        
+        <div class='content hideContent'>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec pulvinar magna vitae quam cursus, sit amet volutpat sem sodales. Praesent ac erat urna. Proin et elit nulla. Ut tristique ligula ut nibh egestas viverra ut id risus. Praesent molestie neque est, non ultrices orci dictum quis. Phasellus tincidunt nibh leo, nec convallis magna convallis vitae. Cras nec luctus tortor. Nullam tincidunt diam eget ligula facilisis, at ullamcorper ex sollicitudin.</div>
+        <div class='show-more-link'><a href='#'>Open Description</a></div>
+        
+        <div class='content hideContent'>aaaaaaaaaaaaaaaaaaa aaaaaaaaaaaaaaaaaaaaaa aaaaaaaaaaaaaaaaaaa estas viverra ut id risus. Praesent molestie neque est, non ultrices orci dictum quis. Phasellus tincidunt nibh leo, nec convallis magna convallis vitae. Cras nec luctus tortor. Nullam tincidunt diam eget ligula facilisis, at ullamcorper ex sollicitudin.</div>
+        <div class='show-more-link'><a href='#'>Open Description</a></div>
+        
+      </div>
+      
+    </div>
+    
+    <!-- Map Buttons -->
+    <button class="mapButton" onclick="findLoc()">Find pet stores near me</button>
+    
+    <!-- Map -->
+    <div id="map"></div>
+    
+    <!-- Open/Close click handling import -->
+    <script src="js/controlpanel.js"></script>
+  </body>
+</html>
