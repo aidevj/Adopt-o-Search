@@ -73,7 +73,7 @@
         var allPets = obj;  //obj is the array
         var bigString = "";
         var count = 0;
-        //console.log(obj);
+        console.log(obj);
         
         for (var i=0; i<allPets.length; i++) {
           var pet = allPets[i];
@@ -95,6 +95,10 @@
           var img = pet.media.photos[1].fpm;
           if (!img) {
             img = "media/placeholder.png";
+          } 
+          var img_L = pet.media.photos[1].x;
+          if (!img_L) {
+            img_L = "media/placeholder.png";
           } 
           
           var description = pet.description;
@@ -155,10 +159,11 @@
             $this.text(linkText);
         });              
         
-        // IMAGE CLICK HANDLER
+        // IMAGE HOVER HANDLER
         ////////////////////////////////////////////
-        $(".petImg").on("click", function() {
-          
+        $(".petImg").on("hover", function() {
+          var lightbox = "<img src='" + img_L + "' height='' width=''"
+          $("body").append()
         });
       }
     </script>
