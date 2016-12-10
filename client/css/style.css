@@ -139,17 +139,9 @@ h1 {
   color: #782121;
 }
 .hideContent {
-    overflow: hidden;
-    line-height: 1em;
-    height: 2em;
+  display: none;
 }
-.showContent {
-    line-height: 1em;
-    height: auto;
-}
-.showContent{
-    height: auto;
-}
+
 
 /* Scrollbar style */
 ::-webkit-scrollbar {

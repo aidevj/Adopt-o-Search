@@ -119,7 +119,9 @@
           line += "<b>" + name + "</b>";
           if (age) line += " (" + age + " " + sex + ")";
           line += "<br>Breed(s): " + breeds + "";
-          //line += "<section class='contact'>[Contact Info]</section>";
+          line += "Contact Info<div class='content hideContent contact'>";
+          // CONTACT FORMATTING AND STUFF HERE
+          line += "</div><div class='show-more-link'><a href='#'>[+]</a></div>";
           line += "<div class='content hideContent'>" + description + "</div>";
           line += "<div class='show-more-link'><a href='#'>Open Description</a></div>";
           
@@ -136,24 +138,24 @@
         document.querySelector("#result").innerHTML = bigString;
         $("#result").fadeIn(500);
         
-        
-        
-        // show-more-link Handler    //////////////////////////////////////////////////
-        $(".show-more-link a").on("click", function() {
+        // SHOW-MORE-LINK HANDLER
+        $( ".show-more-link a" ).on("click", function() {
             var $this = $(this); 
             var $content = $this.parent().prev("div.content");
             var linkText = $this.text().toUpperCase();    
 
             if (linkText === "OPEN DESCRIPTION") {
                 linkText = "Close description";
-                $content.removeClass("hideContent").addClass("showContent");
+                $content.slideToggle("slow");
             } else {
                 linkText = "Open description";
-                $content.removeClass("showContent").addClass("hideContent");
+                $content.slideToggle("slow");
             };
             $this.text(linkText);
-        });
-              
+        });              
+        
+        // IMAGE CLICK HANDLER
+        ////////////////////////////////////////////
       }
     </script>
   </head>
@@ -186,15 +188,7 @@
     
       <!-- Results out div -->
       <div id="result">
-        <p>Search for a pet somewhere!</p> 
-        
-        
-        <div class='content hideContent'>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec pulvinar magna vitae quam cursus, sit amet volutpat sem sodales. Praesent ac erat urna. Proin et elit nulla. Ut tristique ligula ut nibh egestas viverra ut id risus. Praesent molestie neque est, non ultrices orci dictum quis. Phasellus tincidunt nibh leo, nec convallis magna convallis vitae. Cras nec luctus tortor. Nullam tincidunt diam eget ligula facilisis, at ullamcorper ex sollicitudin.</div>
-        <div class='show-more-link'><a href='#'>Open Description</a></div>
-        
-        <div class='content hideContent'>aaaaaaaaaaaaaaaaaaa aaaaaaaaaaaaaaaaaaaaaa aaaaaaaaaaaaaaaaaaa estas viverra ut id risus. Praesent molestie neque est, non ultrices orci dictum quis. Phasellus tincidunt nibh leo, nec convallis magna convallis vitae. Cras nec luctus tortor. Nullam tincidunt diam eget ligula facilisis, at ullamcorper ex sollicitudin.</div>
-        <div class='show-more-link'><a href='#'>Open Description</a></div>
-        
+        <p>Search for a pet somewhere!</p>
       </div>
       
     </div>
