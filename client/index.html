@@ -24,21 +24,7 @@
       
       $(document).ready(function(e) {
         
-        // show-more-link Handler    //////////////////////////////////////////////////
-        $(".show-more-link a").on("click", function() {
-            var $this = $(this); 
-            var $content = $this.parent().prev("div.content");
-            var linkText = $this.text().toUpperCase();    
-
-            if (linkText === "OPEN DESCRIPTION") {
-                linkText = "Close description";
-                $content.removeClass("hideContent").addClass("showContent");
-            } else {
-                linkText = "Open description";
-                $content.removeClass("showContent").addClass("hideContent");
-            };
-            $this.text(linkText);
-        });
+        
             
         // Form Submit Button Handler
         $("#animalForm").submit(function(e) {
@@ -76,7 +62,7 @@
                 
       });
       
-      function jsonLoaded(obj){
+      function jsonLoaded(obj) {
         if (obj.total_items == 0) {
           var status = "Sorry! No results found.<br>Check you have written everything correctly or try a different search."
           document.querySelector("#result").innerHTML = "<p>" + status + "</p>";
@@ -142,12 +128,31 @@
           bigString += line;
           count++;
         }
+        
         if (count == 0) {
           bigString = "Sorry! No results found.<br>Check you have written everything correctly or try a different search.";
         }
         
         document.querySelector("#result").innerHTML = bigString;
         $("#result").fadeIn(500);
+        
+        
+        
+        // show-more-link Handler    //////////////////////////////////////////////////
+        $(".show-more-link a").on("click", function() {
+            var $this = $(this); 
+            var $content = $this.parent().prev("div.content");
+            var linkText = $this.text().toUpperCase();    
+
+            if (linkText === "OPEN DESCRIPTION") {
+                linkText = "Close description";
+                $content.removeClass("hideContent").addClass("showContent");
+            } else {
+                linkText = "Open description";
+                $content.removeClass("showContent").addClass("hideContent");
+            };
+            $this.text(linkText);
+        });
               
       }
     </script>
