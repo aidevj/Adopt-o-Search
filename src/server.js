@@ -10,7 +10,7 @@ var PETFINDER_KEY = "ac31ccff5e15ee67ccdba25941868c6e";
 var PETFINDER_SECRET = "716e19f5f903dfe895302e5e148a2b56";
 
 // Import module - PetFinder  Promise API Client
-// https://www.npmjs.com/paclage/petfinder-promise
+    // https://www.npmjs.com/paclage/petfinder-promise
 var petfinder = require('petfinder-promise')(PETFINDER_KEY,PETFINDER_SECRET);
 
 var PETFINDER_KEY = "ac31ccff5e15ee67ccdba25941868c6e";

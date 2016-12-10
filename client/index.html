@@ -24,8 +24,6 @@
       
       $(document).ready(function(e) {
         
-        
-            
         // Form Submit Button Handler
         $("#animalForm").submit(function(e) {
           var action = $("#animalForm").attr("action");
@@ -62,6 +60,7 @@
                 
       });
       
+      // Read in objects from sever
       function jsonLoaded(obj) {
         if (obj.total_items == 0) {
           var status = "Sorry! No results found.<br>Check you have written everything correctly or try a different search."
@@ -73,7 +72,7 @@
         var allPets = obj;  //obj is the array
         var bigString = "";
         var count = 0;
-        console.log(obj);
+        //console.log(obj);
         
         for (var i=0; i<allPets.length; i++) {
           var pet = allPets[i];
@@ -159,12 +158,6 @@
             $this.text(linkText);
         });              
         
-        // IMAGE HOVER HANDLER
-        ////////////////////////////////////////////
-        $(".petImg").on("hover", function() {
-          var lightbox = "<img src='" + img_L + "' height='' width=''"
-          $("body").append()
-        });
       }
     </script>
   </head>

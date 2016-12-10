@@ -6,6 +6,10 @@ html, body {
 h1 {
   font: bold 26px 'Dosis', sans-serif;
 }
+h3 {
+  font: bold 14px 'Dosis', sans-serif;
+  margin: .2em 0;
+}
 #controlPanel {
   height: 100%;
   padding: 0;
@@ -115,11 +119,20 @@ h1 {
   z-index: 100;
   background-color: rgba(222,184,135,.8);
 }
-#result article:hover {
+/*#result article:hover {
   background-color: rgba(217, 173, 115,.8);
-}
+}*/
 .petImg {
   float: right;
+}
+.petImg:hover {}
+.petImg-big {
+  position:fixed;
+  bottom: 20;
+  right: 20;
+  border: 10px solid white;
+  box-shadow: 2px 2px 3px #333;
+  z-index:5;
 }
 
 /* READ MORE BUTTON STUFF */

@@ -40,8 +40,3 @@ $('.openPanel').on("click", function (){
     // Show control panel content after expanding panel
     $("#controlPanelContent").show();
 });
-
-$('#readMore').on('click', function () {
-  
-});
-
