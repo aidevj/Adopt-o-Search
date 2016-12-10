@@ -119,10 +119,11 @@
           line += "<b>" + name + "</b>";
           if (age) line += " (" + age + " " + sex + ")";
           line += "<br>Breed(s): " + breeds + "";
-          line += "Contact Info<div class='content hideContent contact'>";
-          // CONTACT FORMATTING AND STUFF HERE
-          line += "</div><div class='show-more-link'><a href='#'>[+]</a></div>";
-          line += "<div class='content hideContent'>" + description + "</div>";
+          line += "<h3>Contact Info</h3><div class='contact'>";
+          line += "<a href='mailto:" + contact.email + "?Subject=Pet%20Adoption' target='_top'>" + contact.email + "</a>";
+          line += "<br>" + contact.address + "<br>" + contact.city + ", " + contact.state + " " + contact.zip;
+          line += "</div>";
+          line += "<h3>Description</h3><div class='content hideContent'>" + description + "</div>";
           line += "<div class='show-more-link'><a href='#'>Open Description</a></div>";
           
           line += "</article>";     // end of this pet article
@@ -142,8 +143,8 @@
         $( ".show-more-link a" ).on("click", function() {
             var $this = $(this); 
             var $content = $this.parent().prev("div.content");
-            var linkText = $this.text().toUpperCase();    
-
+            var linkText = $this.text().toUpperCase();  
+            
             if (linkText === "OPEN DESCRIPTION") {
                 linkText = "Close description";
                 $content.slideToggle("slow");
@@ -156,6 +157,9 @@
         
         // IMAGE CLICK HANDLER
         ////////////////////////////////////////////
+        $(".petImg").on("click", function() {
+          
+        });
       }
     </script>
   </head>
